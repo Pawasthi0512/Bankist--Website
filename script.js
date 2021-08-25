@@ -34,7 +34,7 @@ document.addEventListener('keydown', function (e) {
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /////////////////////////////////////////////
-//..........selection of elements............
+//........................................selection of elements...........................................
 // console.log(document.documentElement);
 // console.log(document.head);
 // console.log(document.body);
@@ -53,7 +53,7 @@ const message=document.createElement('div');
 message.classList.add('cookie-message');
 // message.textContent='We are using cookies to recommend songs <button class="btn btn--close-cookie">"Got It!"</button>'
 message.innerHTML='We are using cookies to recommend songs <button class="btn btn--close-cookie">"Got It!"</button>'
-console.log(message);
+// console.log(message);
 
 //........inserting HTML Elements............
 // header.prepend(message);//it will insert this element as first child of header
@@ -66,3 +66,42 @@ header.append(message);// it will insert this element as last child of header.
 document.querySelector('.btn--close-cookie').addEventListener('click',function(){
   message.remove();
 })
+//..........................................................................................................
+
+
+//.................Work with Styles ,attribute and classes..................................................
+///////////styles/////////
+message.style.backgroundColor='#37383d';
+message.style.width='120%';
+
+console.log(message.style.backgroundColor)
+console.log(message.style.width);
+console.log(message.style.color);//we can't access css elements using style in javaScript.
+
+console.log(getComputedStyle(message).color)//accessing css property which are defined in style.css file.
+message.style.height=Number.parseInt(getComputedStyle(message).height,10) + 27 + 'px';
+// console.log(message.style.height);
+// console.log(getComputedStyle(message).height);
+// document.documentElement.style.setProperty('--color-primary', 'orangeRed')
+
+//////////attributes///////////
+const logo=document.querySelector('.nav__logo');
+console.log(logo.className);//access standard attributes
+console.log(logo.alt);
+console.log(logo.src);
+console.log(logo.getAttribute('src'));
+
+logo.alt='A fine Bank web';// setting standard attributes.
+console.log(logo.alt);
+
+console.log(logo.getAttribute('designer'));//accessing non standard attributes
+logo.setAttribute('designer','Puneet');//setting value and defining attributes
+console.log(logo.getAttribute('designer'));
+
+//////////Classes////////////
+// logo.classList.add()
+// logo.classList.remove()
+// logo.classList.toggle()
+// logo.classList.contains()
+
+//..........................................................................................................
