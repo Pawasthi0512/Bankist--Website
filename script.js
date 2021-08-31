@@ -105,3 +105,41 @@ console.log(logo.getAttribute('designer'));
 // logo.classList.contains()
 
 //..........................................................................................................
+
+
+//.......................Implementation of Smooth scrolling..................................................
+const btnScrollTo=document.querySelector('.btn--scroll-to');
+const section1=document.querySelector('#section--1');
+btnScrollTo.addEventListener('click',function(e){
+  e.preventDefault();
+
+  const s1Coords=section1.getBoundingClientRect();//this will return coordinates of section .
+  // console.log(s1Coords);
+  // console.log(window.pageXOffset,window.pageYOffset);
+  // window.pageYOffset// this is height which has been scrolled above from viewPort top.
+
+  // window.scrollTo({
+  //   left:s1Coords.left+window.pageXOffset,
+  //   top:s1Coords.top+window.pageYOffset,
+  //   behavior:'smooth',
+  // })
+
+  // other way
+  section1.scrollIntoView({behavior: 'smooth'});
+})
+//...........................................................................................................
+
+//.......................Bubbling in eventListener...........................................................
+//rgb(255,255,255)
+// const randomColor= (min,max)=>Math.floor((Math.random()*(max-min)+1)+min);
+// console.log(randomColor(0,255));
+// document.querySelector('.nav__link').addEventListener('click',function(e){
+//   this.style.backgroundColor=`rgb(${randomColor(0,255)}, ${randomColor(0,255)},${randomColor(0,255)})`;
+// })
+// document.querySelector('.nav__links').addEventListener('click',function(e){
+//   this.style.backgroundColor=`rgb(${randomColor(0,255)}, ${randomColor(0,255)},${randomColor(0,255)})`;
+// })
+// document.querySelector('.nav').addEventListener('click',function(e){
+//   this.style.backgroundColor=`rgb(${randomColor(0,255)}, ${randomColor(0,255)},${randomColor(0,255)})`;
+// })
+//...........................................................................................................
