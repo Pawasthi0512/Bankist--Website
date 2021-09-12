@@ -189,3 +189,26 @@ tabsContainer.addEventListener('click', function(e){
   // clicked.classList.add('operations__content--active');
 });
 //......................................................................................................
+
+
+//.................fading out links in navigation bar..................................................
+const handelHover = function(e,opacity){
+  if(e.target.classList.contains('nav__link')){
+    const link=e.target;
+    const sibling=e.target.closest('.nav').querySelectorAll('.nav__link');
+    const logo=e.target.closest('.nav').querySelector('img');
+    sibling.forEach(function(el){
+      if(el!==link) el.style.opacity=opacity;
+    })
+    logo.style.opacity=opacity;
+  }
+}
+const nav=document.querySelector('.nav');
+nav.addEventListener('mouseover',function(e){
+  handelHover(e,0.5);
+})
+nav.addEventListener('mouseout',function(e){
+  handelHover(e,1);
+})
+
+//.....................................................................................................
