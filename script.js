@@ -7,6 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo=document.querySelector('.btn--scroll-to');
+const section1=document.querySelector('#section--1');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -66,10 +68,31 @@ header.append(message);// it will insert this element as last child of header.
 document.querySelector('.btn--close-cookie').addEventListener('click',function(){
   message.remove();
 })
+//.......................Implementation of Smooth scrolling..................................................
+btnScrollTo.addEventListener('click',function(e){
+  e.preventDefault();
+
+  const s1Coords=section1.getBoundingClientRect();//this will return coordinates of section .
+  // console.log(s1Coords);
+  // console.log(window.pageXOffset,window.pageYOffset);
+  // window.pageYOffset// this is height which has been scrolled above from viewPort top.
+
+  // window.scrollTo({
+  //   left:s1Coords.left+window.pageXOffset,
+  //   top:s1Coords.top+window.pageYOffset,
+  //   behavior:'smooth',
+  // })
+
+  // other way
+  section1.scrollIntoView({behavior: 'smooth'});
+})
+//...........................................................................................................
+
 //..........................................................................................................
 
 
 //.................Work with Styles ,attribute and classes..................................................
+/*
 ///////////styles/////////
 message.style.backgroundColor='#37383d';
 message.style.width='120%';
@@ -103,31 +126,10 @@ console.log(logo.getAttribute('designer'));
 // logo.classList.remove()
 // logo.classList.toggle()
 // logo.classList.contains()
-
+*/
 //..........................................................................................................
 
 
-//.......................Implementation of Smooth scrolling..................................................
-const btnScrollTo=document.querySelector('.btn--scroll-to');
-const section1=document.querySelector('#section--1');
-btnScrollTo.addEventListener('click',function(e){
-  e.preventDefault();
-
-  const s1Coords=section1.getBoundingClientRect();//this will return coordinates of section .
-  // console.log(s1Coords);
-  // console.log(window.pageXOffset,window.pageYOffset);
-  // window.pageYOffset// this is height which has been scrolled above from viewPort top.
-
-  // window.scrollTo({
-  //   left:s1Coords.left+window.pageXOffset,
-  //   top:s1Coords.top+window.pageYOffset,
-  //   behavior:'smooth',
-  // })
-
-  // other way
-  section1.scrollIntoView({behavior: 'smooth'});
-})
-//...........................................................................................................
 
 //.......................Bubbling in eventListener...........................................................
 //rgb(255,255,255)
@@ -143,3 +145,47 @@ btnScrollTo.addEventListener('click',function(e){
 //   this.style.backgroundColor=`rgb(${randomColor(0,255)}, ${randomColor(0,255)},${randomColor(0,255)})`;
 // })
 //...........................................................................................................
+
+
+//.......................Traversing DOM Tree...........................................................
+// const h1=document.querySelector('h1');
+////////////Going downwards
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// console.log(h1.firstElementChild);
+// console.log(h1.lastElementChild);
+
+//////////Going Upwards
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+// console.log(h1.closest('header'));
+
+
+// ///////////going sidewise
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+//......................................................................................................
+
+
+//................Building Tab components...............................................................
+const tabs=document.querySelectorAll('.operations__tab');
+const tabsContainer=document.querySelector('.operations__tab-container');
+const tabsContent=document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function(e){
+  const clicked=e.target.closest('.operations__tab');
+  console.log(clicked);
+  //if we click to empty place of operations__tab--container then clicked 
+  // will return null so avoid this error  return function without doing any operation.
+  if(!clicked) return;
+  // it will stores all tab to their base positions and activating clicked tab;
+  tabs.forEach(t=>t.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+  // it will stores tabs content and show content of active tab;
+  console.log(clicked.dataset.tab);
+  tabsContent.forEach(c=>c.classList.remove('operations__content--active'));
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+  // clicked.classList.add('operations__content--active');
+});
+//......................................................................................................
