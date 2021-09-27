@@ -234,7 +234,6 @@ window.addEventListener('scroll',function(e){
 const allSections=document.querySelectorAll('.section');
 const revealSection=function(entries,observer){
   const [entry]=entries;
-  console.log(entry);
   if(!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
@@ -247,4 +246,26 @@ allSections.forEach(function(section){
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 })
+//.....................................................................................................
+
+//......................lazy Image loading.............................................................
+//this is very important concept because it will increase website speed.
+const imgTargets=document.querySelectorAll('img[data-src]');
+const lazyLoad=function(entries,observer){
+  const [entry]=entries;
+  // console.log(entry);
+  if(!entry.isIntersecting) return;
+
+  entry.target.src=entry.target.dataset.src;
+  entry.target.addEventListener('load',function(){
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+}
+const imgObserver=new IntersectionObserver(lazyLoad,{
+  root:null,
+  threshold:0,
+  rootMargin:'200px',
+})
+imgTargets.forEach(img=>imgObserver.observe(img));
 //.....................................................................................................
