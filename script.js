@@ -244,7 +244,7 @@ const sectionObserver=new IntersectionObserver(revealSection,{
 });
 allSections.forEach(function(section){
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 })
 //.....................................................................................................
 
@@ -268,4 +268,89 @@ const imgObserver=new IntersectionObserver(lazyLoad,{
   rootMargin:'200px',
 })
 imgTargets.forEach(img=>imgObserver.observe(img));
+//.....................................................................................................
+
+
+
+//...........................implementing slider functionality.........................................
+ // This is really cool feature when we click arrow then it will show different content
+const slides=document.querySelectorAll('.slide');
+const btnRight=document.querySelector('.slider__btn--right');
+const btnLeft=document.querySelector('.slider__btn--left');
+const slider=document.querySelector('.slider');
+const dotContainer=document.querySelector('.dots');
+const dots=document.querySelectorAll('.dots__dot');
+// function for creating dots
+const createDots=function(){
+  slides.forEach(function(_,i){
+    dotContainer.insertAdjacentHTML('beforeend',
+    `<button class='dots__dot' data-slide=${i}></button>`);
+  })
+}
+// slider.style.transform='scale(20%)';
+// slider.style.overflow='visible';
+let curSlide=0;
+const maxSlide=slides.length;
+// generating a function which will show current slide at middle.
+const moveSlide=function(curSlide){
+  slides.forEach(function(s,i){
+    s.style.transform=`translateX(${100*(i-curSlide)}%)`;
+  })
+}
+const activeDot=function(slide){
+  document.querySelectorAll('.dots__dot').forEach(dot=>dot.classList.remove('dots__dot--active'));
+
+  // console.log(slide);
+  // console.log(document.querySelector('.dots__dot'))
+  document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
+}
+//function for moving slides to forward.
+const nextSlide=function(){
+  if(curSlide===maxSlide-1)
+    curSlide=0;
+  else
+    curSlide++;
+  moveSlide(curSlide);
+  activeDot(curSlide);
+}
+
+// move slides to previous slides
+const prevSlide=function(){
+  if(curSlide===0)
+  curSlide=maxSlide-1;
+else
+  curSlide--;
+moveSlide(curSlide);
+activeDot(curSlide);
+}
+const init=function(){
+  createDots();
+  moveSlide(0);
+  activeDot(0);
+}
+init();
+// to move slides to right
+btnRight.addEventListener('click',nextSlide)
+// to move slides to left
+btnLeft.addEventListener('click',prevSlide)
+
+////////////////////////////// implementing dots and arrow key for slider//////////////////////////////
+document.addEventListener('keydown',function(e){
+  // console.log(e.key);
+  if(e.key ==='ArrowLeft') prevSlide();
+  e.key === 'ArrowRight' && nextSlide();
+});
+
+dotContainer.addEventListener('click',function(e){
+  if(e.target.classList.contains('dots__dot')){
+    const {slide}=e.target.dataset;
+    console.log(slide);
+    moveSlide(slide);
+    activeDot(slide);
+  }
+})
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //.....................................................................................................
